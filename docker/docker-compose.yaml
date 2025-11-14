@@ -27,7 +27,7 @@ services:
       dockerfile: docker/application/Dockerfile
     restart: unless-stopped
     ports:
-      - "58080:8080"
+      - "58080:58080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/saisc
       - SPRING_AI_OPENAI_BASE-URL=http://host.docker.internal:1234
