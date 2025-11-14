@@ -1,0 +1,45 @@
+name: saisc-containers
+
+services:
+  postgresql:
+    image: postgres:17-alpine
+    container_name: saisc-postgresql
+    restart: unless-stopped
+    ports:
+      - "58081:5432"
+    environment:
+      - POSTGRES_USER=saisc
+      - POSTGRES_PASSWORD=saisc
+      - POSTGRES_DB=saisc
+    volumes:
+      - saisc_postgres_data:/var/lib/postgresql/data:rw
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  application:
+    container_name: saisc-application
+    build:
+      context: ../
+      dockerfile: docker/application/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "58080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/saisc
+      - SPRING_AI_OPENAI_BASE-URL=http://host.docker.internal:1234
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    links:
+      - postgresql
+
+networks:
+  default:
+    name: saisc-network
+
+volumes:
+  saisc_postgres_data:

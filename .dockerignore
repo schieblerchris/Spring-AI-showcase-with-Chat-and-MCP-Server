@@ -1,0 +1,9 @@
+.idea
+.git
+target
+
+src/main/frontend/generated/
+frontend/generated/
+
+docker
+docker-dev
