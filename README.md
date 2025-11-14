@@ -67,6 +67,16 @@ I recommend to use [LM Studio](https://lmstudio.dev/) with `openai/gpt-oss-20b` 
 `qwen/qwen3-4b-thinking-2507` is fast and has a small memory footprint.  
 To make sure you can see every setting, turn on Developer Mode.
 
+If you are keen enough, you can also use the OpenAI API directly.
+I tried it with some of the sample prompts, it worked, and the performance was really good, but you have to pay for it.
+Change the following configuration in `application.properties`:
+```properties
+spring.ai.openai.base-url=https://api.openai.com
+spring.ai.openai.api-key=$$SUPER_SECRET_KEY$$
+spring.ai.openai.chat.options.model=gpt-5-chat-latest
+```
+If you don't want to use this model, start the app and see what is on offer in the LLM menu section.
+
 ### MCP-Server configuration in LM Studio
 
 On the right side under `Program`, `Install` and `Edit mcp.json` you can add this application here as a server:
