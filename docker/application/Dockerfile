@@ -15,8 +15,9 @@ RUN ls -laR
 FROM eclipse-temurin:21-jre-alpine
 MAINTAINER Christian Schiebler
 
+WORKDIR /home/app
 COPY --from=optimizer /home/app/dependencies/ ./
 COPY --from=optimizer /home/app/snapshot-dependencies/ ./
 COPY --from=optimizer /home/app/spring-boot-loader/ ./
 COPY --from=optimizer /home/app/application/ ./
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
