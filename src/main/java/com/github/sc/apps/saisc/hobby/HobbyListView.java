@@ -6,14 +6,14 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.Menu;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
 import java.util.Collection;
 
-@Menu(title = "Hobbies")
+@PageTitle("Hobbies")
 @Route(value = "hobby", layout = BaseLayout.class)
 public class HobbyListView extends VerticalLayout {
 

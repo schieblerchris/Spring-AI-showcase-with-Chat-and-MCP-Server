@@ -3,25 +3,19 @@ package com.github.sc.apps.saisc.chat;
 import com.github.sc.apps.saisc.common.frontend.BaseLayout;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.accordion.AccordionPanel;
-import com.vaadin.flow.component.avatar.Avatar;
-import com.vaadin.flow.component.card.Card;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.progressbar.ProgressBar;
-import com.vaadin.flow.router.*;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
-@Menu(title = "Chat")
 @PageTitle("Chat")
 @Route(value = "chat", layout = BaseLayout.class)
 public class ChatView extends VerticalLayout {

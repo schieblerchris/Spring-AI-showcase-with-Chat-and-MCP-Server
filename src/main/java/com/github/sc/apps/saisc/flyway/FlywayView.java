@@ -8,7 +8,6 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
-import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
-@Menu(title = "Database cleanup")
 @PageTitle("Database cleanup")
 @Route(value = "db-clean", layout = BaseLayout.class)
 public class FlywayView extends VerticalLayout {
