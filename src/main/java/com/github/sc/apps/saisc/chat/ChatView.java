@@ -4,6 +4,7 @@ import com.github.sc.apps.saisc.common.frontend.BaseLayout;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.accordion.AccordionPanel;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.markdown.Markdown;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.Scroller;
@@ -60,38 +61,20 @@ public class ChatView extends VerticalLayout {
         div.setAlignSelf(FlexComponent.Alignment.END, userCard);
 
         var botCard = new ChatBubbleCard("Bot");
-        var additionalOutput = botCard.getAdditionalOutput();
-        var paragraph = botCard.getParagraph();
+        var botResponse = new Markdown();
+        botCard.addBody(botResponse);
         div.add(botCard);
         div.setAlignSelf(FlexComponent.Alignment.START, botCard);
         this.getUI().ifPresent(ui -> ui.access(botCard::startProgress));
 
-        var messageBuffer = new StringBuilder();
-
-        this.getUI().ifPresent(ui ->
-                chatService.chatStreamDetailed(userPrompt, chatId)
-                        .doOnComplete(() -> ui.access(() -> {
-                            var response = chatResponseParser.parse(messageBuffer.toString());
-                            response.thoughts().forEach(t -> {
-                                var layout = new VerticalLayout();
-                                layout.add(new Paragraph(t));
-                                var accordionPanel = new AccordionPanel("Thought some time");
-                                accordionPanel.add(layout);
-                                additionalOutput.add(accordionPanel);
-                            });
-                            paragraph.setText(response.message());
-                            botCard.stopProgress();
-                        }))
-                        .subscribe(ccr -> {
-                            if (ccr.chatResponse() != null) {
-                                var token = ccr.chatResponse().getResult().getOutput().getText();
-                                if (token != null) {
-                                    messageBuffer.append(token);
-                                    ui.access(() -> paragraph.setText(messageBuffer.toString()));
-                                }
-                            }
-                        }))
-        ;
+        this.getUI().ifPresent(ui -> chatService.chatStreamDetailed(userPrompt, chatId).doOnComplete(() -> ui.access(botCard::stopProgress)).subscribe(ccr -> {
+            if (ccr.chatResponse() != null) {
+                var token = ccr.chatResponse().getResult().getOutput().getText();
+                if (token != null) {
+                    ui.access(() -> botResponse.appendContent(token));
+                }
+            }
+        }));
     }
 
 

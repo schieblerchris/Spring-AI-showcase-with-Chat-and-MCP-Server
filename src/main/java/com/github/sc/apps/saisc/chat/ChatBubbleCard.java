@@ -1,6 +1,7 @@
 package com.github.sc.apps.saisc.chat;
 
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.card.Card;
@@ -16,17 +17,13 @@ public class ChatBubbleCard extends Card {
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     private final ProgressBar progressBar = new ProgressBar();
-    private final Paragraph paragraph = new Paragraph();
-
-    private final VerticalLayout additionalOutput = new VerticalLayout();
 
     private final String title;
 
-
     public ChatBubbleCard(String title, String paragraphText) {
         this.title = title;
-        this.paragraph.setText(paragraphText);
         initComponents();
+        this.addBody(new Paragraph(paragraphText));
     }
 
     public ChatBubbleCard(String title) {
@@ -43,8 +40,6 @@ public class ChatBubbleCard extends Card {
         this.setSubtitle(new Paragraph(subtitle));
         this.setWidth(60.0f, Unit.PERCENTAGE);
         this.add(progressBar);
-        this.add(additionalOutput);
-        this.add(paragraph);
     }
 
     public void startProgress() {
@@ -57,11 +52,8 @@ public class ChatBubbleCard extends Card {
         progressBar.setVisible(false);
     }
 
-    public VerticalLayout getAdditionalOutput() {
-        return additionalOutput;
+    public void addBody(Component component) {
+        this.add(component);
     }
 
-    public Paragraph getParagraph() {
-        return paragraph;
-    }
 }
