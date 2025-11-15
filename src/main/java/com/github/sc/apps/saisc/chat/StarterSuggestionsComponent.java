@@ -11,8 +11,9 @@ public class StarterSuggestionsComponent extends FlexLayout {
 
     private final List<String> suggestions = List.of(
             "What is the current time?",
-            "List all hobbies",
-            "List all hobby categories"
+            "Who is the best in cycling?",
+            "Is Christopher Meyer available on May first 2026?",
+            "On what weekday was Hildegart Birnbaum born?"
     );
 
     private final Consumer<String> handleSelection;
