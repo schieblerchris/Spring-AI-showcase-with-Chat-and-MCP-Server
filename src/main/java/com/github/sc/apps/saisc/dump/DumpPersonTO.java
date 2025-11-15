@@ -1,7 +1,5 @@
 package com.github.sc.apps.saisc.dump;
 
-import jakarta.persistence.Column;
-
 import java.time.LocalDate;
 import java.util.List;
 

@@ -6,7 +6,6 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class StarterSuggestionsComponent extends FlexLayout {
 

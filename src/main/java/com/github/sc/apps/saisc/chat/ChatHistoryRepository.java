@@ -1,9 +1,7 @@
 package com.github.sc.apps.saisc.chat;
 
 import com.github.sc.apps.saisc.common.mapping.FindAllRepository;
-import org.hibernate.annotations.Nationalized;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

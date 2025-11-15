@@ -3,8 +3,6 @@ package com.github.sc.apps.saisc.person;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Comparator;
-
 @Data
 @Entity
 @Table(name = "t_person_hobby")
