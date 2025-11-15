@@ -2,10 +2,13 @@ package com.github.sc.apps.saisc.person;
 
 import com.github.sc.apps.saisc.common.frontend.BaseLayout;
 import com.github.sc.apps.saisc.common.frontend.BasicListView;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.function.ValueProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteParameters;
+import com.vaadin.flow.router.RouterLink;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -37,5 +40,15 @@ public class PersonListView extends BasicListView<PersonRepository, PersonET, In
                 PersonET::getLastName, "Last Name",
                 PersonET::getBirthdate, "Birthdate"
         );
+    }
+
+    @Override
+    protected void customizeGrid(Grid<PersonET> grid) {
+        grid.addComponentColumn(person ->
+                        new RouterLink("Details", PersonDetailView.class,
+                                new RouteParameters("personId", String.valueOf(person.getId()))))
+                .setHeader("Detail")
+                .setAutoWidth(true)
+                .setFlexGrow(0);
     }
 }

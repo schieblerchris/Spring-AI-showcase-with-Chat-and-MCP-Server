@@ -25,12 +25,16 @@ public abstract class BasicListView<R extends FindAllRepository<T, ID>, T, ID> e
 
     protected abstract Map<ValueProvider<T, ?>, String> getColumns();
 
+    protected void customizeGrid(Grid<T> grid) {
+    }
+
     private void createContent() {
         var filters = getFilters();
         var grid = new Grid<>(getEntities());
         grid.removeAllColumns();
 
         getColumns().forEach((k, v) -> grid.addColumn(k).setHeader(v));
+        customizeGrid(grid);
         grid.setSizeFull();
 
         filters.forEach(this::add);
