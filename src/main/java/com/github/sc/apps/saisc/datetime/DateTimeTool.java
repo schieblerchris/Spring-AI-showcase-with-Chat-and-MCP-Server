@@ -8,13 +8,14 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
 @Slf4j
 public class DateTimeTool implements ToolMarkerInterface {
 
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss Z");
 
     @McpTool(name = "get_current_date", description = "returns the current date in format yyyy-MM-dd")
     @Tool(name = "get_current_date", description = "returns the current date in format yyyy-MM-dd")
@@ -38,7 +39,7 @@ public class DateTimeTool implements ToolMarkerInterface {
     @Tool(name = "get_current_time", description = "returns the current time")
     public String getCurrentTime() {
         log.debug("get current time");
-        var result = LocalTime.now().format(TIME_FORMATTER);
+        var result = ZonedDateTime.now().format(TIME_FORMATTER);
         log.debug("found time: {}", result);
         return result;
     }
