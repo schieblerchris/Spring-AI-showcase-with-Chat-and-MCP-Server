@@ -5,7 +5,6 @@ import com.github.sc.apps.saisc.common.view.BaseLayout;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.markdown.Markdown;
 import com.vaadin.flow.component.messages.MessageInput;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
@@ -35,7 +34,7 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
             If you reference any person add a http link to their profile http://localhost:58080/persons/{personId}.
             Always include a table containing your tool calls with the input parameters in the final response.
             """;
-    private final VerticalLayout div;
+    private final VerticalLayout chatLayout = new VerticalLayout();
     private final StarterSuggestionsComponent starterSuggestions = new StarterSuggestionsComponent(this::handleUserPrompt);
     private final ChatMemoryRepository chatMemoryRepository;
     private final ChatClient chatClient;
@@ -49,17 +48,16 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
         var chatMemoryAdvisor = MessageChatMemoryAdvisor
                 .builder(chatMemory)
                 .build();
-        chatClient = chatClientBuilder
+        this.chatClient = chatClientBuilder
                 .defaultSystem(SYSTEM_PROMPT)
                 .defaultAdvisors(chatMemoryAdvisor)
                 .build();
         this.chatMemoryRepository = chatMemoryRepository;
 
-        div = new VerticalLayout();
-        div.setWidth(100.0f, Unit.PERCENTAGE);
-        div.setSizeFull();
-        div.setSpacing(12, Unit.PIXELS);
-        var scroller = new Scroller(div);
+        this.chatLayout.setWidth(100.0f, Unit.PERCENTAGE);
+        this.chatLayout.setSizeFull();
+        this.chatLayout.setSpacing(12, Unit.PIXELS);
+        var scroller = new Scroller(chatLayout);
         scroller.setSizeFull();
         this.addAndExpand(scroller);
 
@@ -86,17 +84,9 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
         if (!messages.isEmpty()) {
             messages.forEach(chatMessage -> {
                 if (chatMessage.getMessageType() == MessageType.USER) {
-                    var userCard = new ChatBubbleCard("User", chatMessage.getText());
-                    userCard.addClassName("chat-bubble-right");
-                    div.add(userCard);
-                    div.setAlignSelf(FlexComponent.Alignment.END, userCard);
-
+                    addUserCard(chatMessage.getText());
                 } else {
-                    var botCard = new ChatBubbleCard("Bot");
-                    var botResponse = new Markdown(chatMessage.getText());
-                    botCard.addBody(botResponse);
-                    div.add(botCard);
-                    div.setAlignSelf(FlexComponent.Alignment.START, botCard);
+                    addBotCard(new Markdown(chatMessage.getText()));
                 }
             });
             starterSuggestions.setHasSentMessage();
@@ -111,16 +101,10 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
     }
 
     private void handleUserPrompt(String userPrompt) {
-        var userCard = new ChatBubbleCard("User", userPrompt);
-        userCard.addClassName("chat-bubble-right");
-        div.add(userCard);
-        div.setAlignSelf(FlexComponent.Alignment.END, userCard);
+        addUserCard(userPrompt);
 
-        var botCard = new ChatBubbleCard("Bot");
         var botResponse = new Markdown();
-        botCard.addBody(botResponse);
-        div.add(botCard);
-        div.setAlignSelf(FlexComponent.Alignment.START, botCard);
+        var botCard = addBotCard(botResponse);
         this.getUI().ifPresent(ui -> ui.access(botCard::startProgress));
 
         this.getUI().ifPresent(ui -> chatStreamDetailed(userPrompt).doOnComplete(() -> ui.access(botCard::stopProgress)).subscribe(ccr -> {
@@ -131,6 +115,21 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
                 }
             }
         }));
+    }
+
+    private void addUserCard(String userPrompt) {
+        var userCard = new ChatBubbleCard("User", userPrompt);
+        userCard.addClassName("chat-bubble-right");
+        chatLayout.add(userCard);
+        chatLayout.setAlignSelf(Alignment.END, userCard);
+    }
+
+    private ChatBubbleCard addBotCard(Markdown chatMessage) {
+        var botCard = new ChatBubbleCard("Bot");
+        botCard.addBody(chatMessage);
+        chatLayout.add(botCard);
+        chatLayout.setAlignSelf(Alignment.START, botCard);
+        return botCard;
     }
 
     private Flux<ChatClientResponse> chatStreamDetailed(String userInput) {
