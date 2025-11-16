@@ -21,7 +21,6 @@ public class ChatModelListView extends VerticalLayout {
         createContent();
     }
 
-
     private void createContent() {
         var grid = new Grid<>(openAIAdapter.getModels());
         grid.addColumn(OpenAIAdapter.ModelData::id).setHeader("Name");

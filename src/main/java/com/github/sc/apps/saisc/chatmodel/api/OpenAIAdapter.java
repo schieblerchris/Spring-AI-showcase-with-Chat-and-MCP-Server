@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.github.sc.apps.saisc.common.mapping.UnixTimestampDeserializer;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpMethod;
@@ -12,8 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class OpenAIAdapter {
@@ -27,13 +28,13 @@ public class OpenAIAdapter {
         this.objectMapper = objectMapper;
     }
 
-    public List<ModelData> getModels() {
+    public Set<ModelData> getModels() {
         var response = restClient.method(HttpMethod.GET).uri("/v1/models").retrieve();
         var body = response.body(String.class);
         try {
-            return objectMapper.readValue(body, ModelListResponse.class).data();
+            return objectMapper.readValue(body, ModelListResponse.class).data().stream().filter(Objects::nonNull).collect(Collectors.toCollection(TreeSet::new));
         } catch (JsonProcessingException e) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
     }
 
@@ -55,7 +56,14 @@ public class OpenAIAdapter {
             LocalDateTime created,
             @JsonProperty("owned_by")
             String ownedBy
-    ) {
+    ) implements Comparable<ModelData> {
+
+        public static final Comparator<ModelData> COMPARATOR = Comparator.comparing(ModelData::id);
+
+        @Override
+        public int compareTo(OpenAIAdapter.@NotNull ModelData o) {
+            return COMPARATOR.compare(this, o);
+        }
     }
 
 
