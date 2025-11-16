@@ -33,13 +33,11 @@ public class PersonDetailView extends VerticalLayout implements BeforeEnterObser
     private final HobbyRepository hobbyRepository;
     private final EventRepository eventRepository;
     private final VacationRepository vacationRepository;
-
-    private Integer personId;
-    private PersonET person;
-
     private final VerticalLayout headerSection = new VerticalLayout();
     private final Grid<PersonHobbyRow> hobbyGrid = new Grid<>(PersonHobbyRow.class, false);
     private final Grid<CalendarRow> calendarGrid = new Grid<>(CalendarRow.class, false);
+    private Integer personId;
+    private PersonET person;
 
     @Autowired
     public PersonDetailView(PersonRepository personRepository,
