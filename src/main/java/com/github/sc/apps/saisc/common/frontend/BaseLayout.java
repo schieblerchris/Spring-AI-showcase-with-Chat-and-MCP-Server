@@ -16,6 +16,9 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteParameters;
+
+import java.util.UUID;
 
 @Route
 public class BaseLayout extends AppLayout {
@@ -38,7 +41,7 @@ public class BaseLayout extends AppLayout {
     private void createDrawer() {
         var sideNavChat = new SideNav();
         sideNavChat.setLabel("LLM");
-        sideNavChat.addItem(new SideNavItem("Chat", ChatView.class, VaadinIcon.CHAT.create()));
+        sideNavChat.addItem(new SideNavItem("Chat", ChatView.class, new RouteParameters("chatId", UUID.randomUUID().toString()), VaadinIcon.CHAT.create()));
         sideNavChat.addItem(new SideNavItem("History", ChatHistoryView.class, VaadinIcon.ARCHIVE.create()));
         sideNavChat.addItem(new SideNavItem("Model", ChatModelListView.class, VaadinIcon.FILE_SEARCH.create()));
 
