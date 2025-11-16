@@ -11,6 +11,7 @@ import com.vaadin.flow.router.RouteParameters;
 import com.vaadin.flow.router.RouterLink;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,11 +36,11 @@ public class PersonListView extends BasicListView<PersonRepository, PersonET, In
 
     @Override
     protected Map<ValueProvider<PersonET, ?>, String> getColumns() {
-        return Map.of(
-                PersonET::getFirstName, "First Name",
-                PersonET::getLastName, "Last Name",
-                PersonET::getBirthdate, "Birthdate"
-        );
+        var columns = new LinkedHashMap<ValueProvider<PersonET, ?>, String>();
+        columns.put(PersonET::getFirstName, "First Name");
+        columns.put(PersonET::getLastName, "Last Name");
+        columns.put(PersonET::getBirthdate, "Birthdate");
+        return columns;
     }
 
     @Override

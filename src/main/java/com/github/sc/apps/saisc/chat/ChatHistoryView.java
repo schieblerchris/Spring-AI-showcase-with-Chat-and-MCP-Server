@@ -12,8 +12,8 @@ import com.vaadin.flow.router.RouterLink;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @PageTitle("Chat History")
@@ -36,13 +36,13 @@ public class ChatHistoryView extends BasicListView<ChatHistoryRepository, ChatHi
     }
 
     @Override
-    protected Map<ValueProvider<ChatHistoryTO, ?>, String> getColumns() {
-        return Map.of(
-                ChatHistoryTO::getConversationId, "Conversation ID",
-                ChatHistoryTO::getStart, "Start",
-                ChatHistoryTO::getEnd, "End",
-                ChatHistoryTO::getMessageCount, "Message Count"
-        );
+    protected LinkedHashMap<ValueProvider<ChatHistoryTO, ?>, String> getColumns() {
+        var columns = new LinkedHashMap<ValueProvider<ChatHistoryTO, ?>, String>();
+        columns.put(ChatHistoryTO::getConversationId, "Conversation ID");
+        columns.put(ChatHistoryTO::getStart, "Start");
+        columns.put(ChatHistoryTO::getEnd, "End");
+        columns.put(ChatHistoryTO::getMessageCount, "Message Count");
+        return columns;
     }
 
     @Override
