@@ -45,8 +45,8 @@ Basically, this application is an aggregation layer for the LLM to get all the r
 - Java 21.0.8
 - Maven 3.9.11
 - Spring Boot 3.5.7
-- Spring AI 1.1.0-M4
-- Docker Compose (Should work with Podman as well, just for the database)
+- Spring AI 1.1.0
+- Docker Compose
 - PostgreSQL 17
 - Vaadin 24.9.4
 - LM Studio 0.3.31
@@ -56,6 +56,9 @@ Basically, this application is an aggregation layer for the LLM to get all the r
 Besides the standard Spring Boot Maven structure, we have some additional folders:
 
 * docker: Contains the docker-compose.yml file to start the application and database locally
+    * Please verify the `extra_hosts` section in the docker-compose file, it is highly dependent on your local operating
+      system and container software.
+    * For Rancher Desktop on Mac remove the `extra_hosts` section.
 * docker-dev: Contains only the database so that you can start the application from your IDE
 
 ## LLM
@@ -67,7 +70,7 @@ I recommend to use [LM Studio](https://lmstudio.dev/) with `openai/gpt-oss-20b` 
 `qwen/qwen3-4b-thinking-2507` is fast and has a small memory footprint.  
 To make sure you can see every setting, turn on Developer Mode.
 
-If you are keen enough, you can also use the OpenAI API directly.
+If you are keen enough, you can also use the OpenAI API directly.  
 I tried it with some of the sample prompts, it worked, and the performance was really good, but you have to pay for it.
 Change the following configuration in `application.properties`:
 ```properties
