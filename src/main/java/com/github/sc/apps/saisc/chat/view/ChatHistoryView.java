@@ -51,7 +51,7 @@ public class ChatHistoryView extends BasicListView<ChatHistoryRepository, ChatHi
     protected void customizeGrid(Grid<ChatHistoryVO> grid) {
         grid.addComponentColumn(chat ->
                         new RouterLink("Details", ChatView.class,
-                                new RouteParameters("chatId", String.valueOf(chat.conversationId))))
+                                new RouteParameters("chatId", String.valueOf(chat.getConversationId()))))
                 .setHeader("Detail")
                 .setAutoWidth(true)
                 .setFlexGrow(0);
