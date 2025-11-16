@@ -1,7 +1,8 @@
 package com.github.sc.apps.saisc.person;
 
 import com.github.sc.apps.saisc.TestcontainersConfiguration;
-import com.github.sc.apps.saisc.hobby.HobbyRepository;
+import com.github.sc.apps.saisc.hobby.persistence.HobbyRepository;
+import com.github.sc.apps.saisc.person.persistence.PersonRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

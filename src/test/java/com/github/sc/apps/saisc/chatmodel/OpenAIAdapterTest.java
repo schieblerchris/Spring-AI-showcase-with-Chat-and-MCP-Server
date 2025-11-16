@@ -1,13 +1,14 @@
 package com.github.sc.apps.saisc.chatmodel;
 
 import com.github.sc.apps.saisc.TestcontainersConfiguration;
+import com.github.sc.apps.saisc.chatmodel.api.OpenAIAdapter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(TestcontainersConfiguration.class)
 @Slf4j
