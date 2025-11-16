@@ -5,6 +5,7 @@ create table t_event
     start_date date         not null,
     end_date   date         not null,
     hobby_fk   int,
+    skill_level varchar(32) not null default 'NONE',
     constraint fk_event_hobby foreign key (hobby_fk) references t_hobby (id) on delete set null
 );
 
