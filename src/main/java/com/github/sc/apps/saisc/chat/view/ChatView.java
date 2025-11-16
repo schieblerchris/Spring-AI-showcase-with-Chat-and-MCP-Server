@@ -1,23 +1,31 @@
 package com.github.sc.apps.saisc.chat.view;
 
+import com.github.sc.apps.saisc.chatmodel.api.OpenAIAdapter;
 import com.github.sc.apps.saisc.common.mcp.ToolMarkerInterface;
 import com.github.sc.apps.saisc.common.view.BaseLayout;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.markdown.Markdown;
 import com.vaadin.flow.component.messages.MessageInput;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.select.Select;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.*;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
 import org.springframework.ai.chat.messages.MessageType;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import reactor.core.publisher.Flux;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -35,24 +43,43 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
             Always include a table containing your tool calls with the input parameters in the final response.
             """;
     private final VerticalLayout chatLayout = new VerticalLayout();
+    private final HorizontalLayout modelOptionsLayout = new HorizontalLayout();
     private final StarterSuggestionsComponent starterSuggestions = new StarterSuggestionsComponent(this::handleUserPrompt);
     private final ChatMemoryRepository chatMemoryRepository;
-    private final ChatClient chatClient;
+    private final ChatClient.Builder chatClientBuilder;
+    private final MessageChatMemoryAdvisor chatMemoryAdvisor;
     private final Object[] tools;
+    private ChatClient chatClient;
     private ChatId chatId;
+    private List<String> models = new ArrayList<>();
+    private String model = "";
+    private double temperature = 0.3;
 
     @Autowired
     public ChatView(ChatClient.Builder chatClientBuilder,
-                    ChatMemory chatMemory, List<ToolMarkerInterface> tools, ChatMemoryRepository chatMemoryRepository) {
+                    ChatMemory chatMemory,
+                    List<ToolMarkerInterface> tools,
+                    ChatMemoryRepository chatMemoryRepository,
+                    OpenAIAdapter openAIAdapter,
+                    @Value("${application.preferred.ai.model}") List<String> preferredModel
+    ) {
+        this.chatClientBuilder = chatClientBuilder;
         this.tools = tools.toArray(new ToolMarkerInterface[0]);
-        var chatMemoryAdvisor = MessageChatMemoryAdvisor
+        this.chatMemoryAdvisor = MessageChatMemoryAdvisor
                 .builder(chatMemory)
                 .build();
-        this.chatClient = chatClientBuilder
-                .defaultSystem(SYSTEM_PROMPT)
-                .defaultAdvisors(chatMemoryAdvisor)
-                .build();
+
         this.chatMemoryRepository = chatMemoryRepository;
+        this.models = openAIAdapter.getModels().stream().map(OpenAIAdapter.ModelData::id).toList();
+        this.model = models.stream().filter(preferredModel::contains).findFirst().orElse(models.getFirst());
+
+        var modelSelect = getModelSelect();
+        modelOptionsLayout.add(modelSelect);
+
+        var temperatureField = getTemperatureField();
+        modelOptionsLayout.add(temperatureField);
+
+        this.add(modelOptionsLayout);
 
         this.chatLayout.setWidth(100.0f, Unit.PERCENTAGE);
         this.chatLayout.setSizeFull();
@@ -67,6 +94,47 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
         messageInput.addSubmitListener(this::onSubmit);
         messageInput.setWidthFull();
         this.add(messageInput);
+        initChatClient(model);
+    }
+
+    private @NotNull Select<String> getModelSelect() {
+        var modelSelect = new Select<String>();
+        modelSelect.setLabel("Model");
+        modelSelect.setItems(models);
+        modelSelect.setValue(model);
+        modelSelect.addValueChangeListener(e -> {
+            log.info("Model changed to {}", e.getValue());
+            this.model = e.getValue();
+            this.initChatClient(e.getValue());
+        });
+        return modelSelect;
+    }
+
+    private @NotNull NumberField getTemperatureField() {
+        var temperatureField = new NumberField();
+        temperatureField.setLabel("Temperature");
+        temperatureField.setValue(temperature);
+        temperatureField.setStepButtonsVisible(true);
+        temperatureField.setMin(0);
+        temperatureField.setStep(0.1);
+        temperatureField.setMax(1);
+        temperatureField.addValueChangeListener(e -> {
+            log.info("Temperature changed to {}", e.getValue());
+            this.temperature = e.getValue();
+            this.initChatClient(model);
+        });
+        return temperatureField;
+    }
+
+    public void initChatClient(String modelName) {
+        this.chatClient = chatClientBuilder
+                .defaultOptions(ChatOptions.builder()
+                        .model(modelName)
+                        .temperature(temperature)
+                        .build())
+                .defaultSystem(SYSTEM_PROMPT)
+                .defaultAdvisors(chatMemoryAdvisor)
+                .build();
     }
 
     @Override
