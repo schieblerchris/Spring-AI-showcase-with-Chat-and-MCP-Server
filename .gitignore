@@ -1,5 +1,6 @@
 .idea
 target
 
+src/main/bundles
 src/main/frontend/generated/
 frontend/generated/
