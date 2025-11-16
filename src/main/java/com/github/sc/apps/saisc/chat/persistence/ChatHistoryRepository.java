@@ -11,8 +11,6 @@ public interface ChatHistoryRepository extends FindAllRepository<ChatHistoryVO, 
 
     List<ChatHistoryVO> findAll();
 
-    boolean existsByConversationId(String conversationId);
-
     @Override
     default List<ChatHistoryVO> findAllForListView() {
         return findAll();
