@@ -12,10 +12,10 @@ public class PersonHobbyET {
 
     @Id
     @Column(name = "person_fk")
-    private Integer person;
+    private int person;
     @Id
     @Column(name = "hobby_fk")
-    private Integer hobby;
+    private int hobby;
 
     @Column(name = "skill_level")
     @Enumerated(EnumType.STRING)
@@ -23,8 +23,8 @@ public class PersonHobbyET {
 
     @Data
     public static class PersonHobbyKey {
-        private Integer person;
-        private Integer hobby;
+        private int person;
+        private int hobby;
     }
 
     public enum SkillLevel {
