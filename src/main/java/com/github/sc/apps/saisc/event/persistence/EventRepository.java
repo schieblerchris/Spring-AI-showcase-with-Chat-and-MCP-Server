@@ -18,5 +18,7 @@ public interface EventRepository extends JpaRepository<EventET, Integer> {
     @Query(value = "select e from EventET e where e.startDate <= :date and e.endDate >= :date")
     List<EventET> findAllByDate(LocalDate date);
 
+    List<EventET> findByTitleOrderByStartDateAscTitleAsc(String title);
+
 }
 
