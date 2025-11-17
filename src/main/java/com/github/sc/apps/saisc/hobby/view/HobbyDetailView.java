@@ -20,16 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.*;
 
 @PageTitle("Hobby")
-@Route(value = "hobby/:hobbyId", layout = BaseLayout.class)
+@Route(value = "hobbies/:hobbyId", layout = BaseLayout.class)
 public class HobbyDetailView extends VerticalLayout implements BeforeEnterObserver {
 
     private final HobbyRepository hobbyRepository;
     private final PersonHobbyRepository personHobbyRepository;
     private final VerticalLayout headerSection = new VerticalLayout();
     private final Grid<HobbyDetailView.PersonHobbyRow> hobbyGrid = new Grid<>(HobbyDetailView.PersonHobbyRow.class, false);
+    private final List<PersonHobbyRow> personHobbyRows = new ArrayList<>();
     private Integer hobbyId;
     private HobbyET hobby;
-    private List<PersonHobbyRow> personHobbyRows = new ArrayList<>();
 
     @Autowired
     public HobbyDetailView(HobbyRepository hobbyRepository, PersonHobbyRepository personHobbyRepository) {

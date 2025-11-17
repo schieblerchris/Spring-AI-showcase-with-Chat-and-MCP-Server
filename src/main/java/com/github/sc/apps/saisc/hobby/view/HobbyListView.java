@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @PageTitle("Hobbies")
-@Route(value = "hobby", layout = BaseLayout.class)
+@Route(value = "hobbies", layout = BaseLayout.class)
 public class HobbyListView extends BasicListView<HobbyRepository, HobbyET, Integer> {
 
 
