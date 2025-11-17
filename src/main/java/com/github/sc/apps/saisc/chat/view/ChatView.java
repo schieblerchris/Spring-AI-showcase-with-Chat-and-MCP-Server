@@ -39,7 +39,11 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
             You are a personal assistant to help finding the best suited person for a given activity.
             Always try to find the best fitting person by availability and hobby skill level.
             To reduce biases resolve the person data, like first name, last name, age, gender, etc. at the last possible moment.
-            If you reference any person add a http link to their profile http://localhost:58080/persons/{personId}.
+            If you reference any of the following data add a http link to the corresponding detail page:
+            * Persons `http://localhost:58080/persons/{personId}`
+            * Hobbies `http://localhost:58080/hobbies/{hobbyId}`
+            * Events `http://localhost:58080/events/{eventId}`
+            Use Markdown notation to abbreviate the links, either on the ID or the name/title.
             Always include a table containing your tool calls with the input parameters in the final response.
             """;
     private final VerticalLayout chatLayout = new VerticalLayout();
