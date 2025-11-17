@@ -1,5 +1,7 @@
 package com.github.sc.apps.saisc.event.persistence;
 
+import com.github.sc.apps.saisc.common.mapping.FindAllRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface EventRepository extends JpaRepository<EventET, Integer> {
+public interface EventRepository extends JpaRepository<EventET, Integer>, FindAllRepository<EventET, Integer> {
     @Query(value = "select e from EventET e join PersonEventET pe on pe.event = e.id where pe.person = :personId")
     List<EventET> findAllByPerson(int personId);
 
@@ -20,5 +22,14 @@ public interface EventRepository extends JpaRepository<EventET, Integer> {
 
     List<EventET> findByTitleOrderByStartDateAscTitleAsc(String title);
 
+    @Override
+    default List<EventET> findAllForListView() {
+        return findAll();
+    }
+
+    @Override
+    default List<EventET> findAllForListView(Sort sort) {
+        return findAll(sort);
+    }
 }
 

@@ -17,6 +17,8 @@ public interface PersonEventRepository extends JpaRepository<PersonEventET, Pers
     @Query(value = "select p.id from PersonET p where p.id not in (select distinct pe.person from PersonEventET pe join EventET e on pe.event = e.id where e.startDate <= :date and e.endDate >= :date)")
     List<Integer> findAvailablePersons(LocalDate date);
 
+    List<PersonEventET> findAllByEvent(int event);
+
     Optional<PersonEventET> findByPersonAndEvent(int person, int event);
 
     List<PersonEventET> findByPerson(int person);
