@@ -1,5 +1,6 @@
 package com.github.sc.apps.saisc.event.persistence;
 
+import com.github.sc.apps.saisc.person.persistence.SkillLevel;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,4 +28,8 @@ public class EventET {
 
     @Column(name = "hobby_fk")
     private Integer hobbyId;
+
+    @Column(name = "skill_level")
+    @Enumerated(EnumType.STRING)
+    private SkillLevel skillLevel;
 }
