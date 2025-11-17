@@ -13,7 +13,9 @@ public class StarterSuggestionsComponent extends FlexLayout {
             "What is the current time?",
             "Who is the best in cycling?",
             "Is Christopher Meyer available on May first 2026?",
-            "On what weekday was Hildegart Birnbaum born?"
+            "On what weekday was Hildegart Birnbaum born?",
+            "What events take place around 2026-05-01?",
+            "Who is best suited to attend Eschborn Frankfurt Express in 2026? Ignore their availability!"
     );
 
     private final Consumer<String> handleSelection;
