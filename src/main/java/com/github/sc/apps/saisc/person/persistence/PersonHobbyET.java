@@ -27,13 +27,5 @@ public class PersonHobbyET {
         private int hobby;
     }
 
-    public enum SkillLevel {
-        NONE,
-        BEGINNER,
-        INTERMEDIATE,
-        ADVANCED,
-        EXPERT;
-    }
-
 
 }

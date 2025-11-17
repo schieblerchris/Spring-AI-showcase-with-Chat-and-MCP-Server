@@ -5,10 +5,7 @@ import com.github.sc.apps.saisc.common.view.NotFoundView;
 import com.github.sc.apps.saisc.event.persistence.EventRepository;
 import com.github.sc.apps.saisc.hobby.persistence.HobbyET;
 import com.github.sc.apps.saisc.hobby.persistence.HobbyRepository;
-import com.github.sc.apps.saisc.person.persistence.PersonET;
-import com.github.sc.apps.saisc.person.persistence.PersonHobbyET;
-import com.github.sc.apps.saisc.person.persistence.PersonHobbyRepository;
-import com.github.sc.apps.saisc.person.persistence.PersonRepository;
+import com.github.sc.apps.saisc.person.persistence.*;
 import com.github.sc.apps.saisc.vacation.persistence.VacationRepository;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
@@ -153,7 +150,7 @@ public class PersonDetailView extends VerticalLayout implements BeforeEnterObser
         calendarGrid.setItems(allRows);
     }
 
-    public record PersonHobbyRow(String hobby, PersonHobbyET.SkillLevel skillLevel) {
+    public record PersonHobbyRow(String hobby, SkillLevel skillLevel) {
     }
 
     public record CalendarRow(String type, String title, java.time.LocalDate startDate, java.time.LocalDate endDate) {

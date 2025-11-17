@@ -15,6 +15,6 @@ public interface PersonHobbyRepository extends JpaRepository<PersonHobbyET, Pers
     List<PersonHobbyET> findByPerson(int person);
 
     @Query("select ph.person from PersonHobbyET ph where ph.hobby = :hobbyId and ph.skillLevel = :skillLevel")
-    List<Integer> findByHobbyAndSkillLevel(int hobbyId, PersonHobbyET.SkillLevel skillLevel);
+    List<Integer> findByHobbyAndSkillLevel(int hobbyId, SkillLevel skillLevel);
 
 }

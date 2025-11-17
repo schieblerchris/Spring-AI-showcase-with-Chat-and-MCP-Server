@@ -4,8 +4,8 @@ import com.github.sc.apps.saisc.common.view.BaseLayout;
 import com.github.sc.apps.saisc.common.view.NotFoundView;
 import com.github.sc.apps.saisc.hobby.persistence.HobbyET;
 import com.github.sc.apps.saisc.hobby.persistence.HobbyRepository;
-import com.github.sc.apps.saisc.person.persistence.PersonHobbyET;
 import com.github.sc.apps.saisc.person.persistence.PersonHobbyRepository;
+import com.github.sc.apps.saisc.person.persistence.SkillLevel;
 import com.github.sc.apps.saisc.person.view.PersonDetailView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -70,14 +70,14 @@ public class HobbyDetailView extends VerticalLayout implements BeforeEnterObserv
             return;
         }
         this.hobby = hobbyOpt.get();
-        var personHobbies = new HashMap<PersonHobbyET.SkillLevel, List<Integer>>();
-        Arrays.stream(PersonHobbyET.SkillLevel.values()).forEach(sl -> personHobbies.put(sl, personHobbyRepository.findByHobbyAndSkillLevel(hobbyId, sl)));
+        var personHobbies = new HashMap<SkillLevel, List<Integer>>();
+        Arrays.stream(SkillLevel.values()).forEach(sl -> personHobbies.put(sl, personHobbyRepository.findByHobbyAndSkillLevel(hobbyId, sl)));
         var maxEntryCount = personHobbies.values().stream().mapToInt(List::size).max().orElse(0);
-        var none = personHobbies.get(PersonHobbyET.SkillLevel.NONE);
-        var beginner = personHobbies.get(PersonHobbyET.SkillLevel.BEGINNER);
-        var intermediate = personHobbies.get(PersonHobbyET.SkillLevel.INTERMEDIATE);
-        var advanced = personHobbies.get(PersonHobbyET.SkillLevel.ADVANCED);
-        var expert = personHobbies.get(PersonHobbyET.SkillLevel.EXPERT);
+        var none = personHobbies.get(SkillLevel.NONE);
+        var beginner = personHobbies.get(SkillLevel.BEGINNER);
+        var intermediate = personHobbies.get(SkillLevel.INTERMEDIATE);
+        var advanced = personHobbies.get(SkillLevel.ADVANCED);
+        var expert = personHobbies.get(SkillLevel.EXPERT);
         for (int i = 0; i < maxEntryCount; i++) {
             personHobbyRows.add(new PersonHobbyRow(
                     getOrNull(i, none),

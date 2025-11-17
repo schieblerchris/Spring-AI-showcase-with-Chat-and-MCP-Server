@@ -2,7 +2,7 @@ package com.github.sc.apps.saisc.hobby.ai;
 
 import com.github.sc.apps.saisc.common.mcp.ToolMarkerInterface;
 import com.github.sc.apps.saisc.hobby.persistence.HobbyRepository;
-import com.github.sc.apps.saisc.person.persistence.PersonHobbyET;
+import com.github.sc.apps.saisc.person.persistence.SkillLevel;
 import lombok.extern.slf4j.Slf4j;
 import org.springaicommunity.mcp.annotation.McpTool;
 import org.springaicommunity.mcp.annotation.McpToolParam;
@@ -48,9 +48,9 @@ public class HobbyTool implements ToolMarkerInterface {
     @Tool(name = "compare_skill_level", description = "compares two skill levels")
     public String compareSkillLevel(
             @McpToolParam(description = "the first skill level")
-            @ToolParam(description = "the first skill level") PersonHobbyET.SkillLevel skillLevel1,
+            @ToolParam(description = "the first skill level") SkillLevel skillLevel1,
             @McpToolParam(description = "the second skill level")
-            @ToolParam(description = "the second skill level") PersonHobbyET.SkillLevel skillLevel2
+            @ToolParam(description = "the second skill level") SkillLevel skillLevel2
     ) {
         log.debug("compare skill level {} with {}", skillLevel1, skillLevel2);
         var result = "equal";

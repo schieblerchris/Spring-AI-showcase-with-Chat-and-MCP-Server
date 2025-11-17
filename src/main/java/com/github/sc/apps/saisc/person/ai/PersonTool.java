@@ -4,6 +4,7 @@ import com.github.sc.apps.saisc.common.mcp.ToolMarkerInterface;
 import com.github.sc.apps.saisc.person.persistence.PersonHobbyET;
 import com.github.sc.apps.saisc.person.persistence.PersonHobbyRepository;
 import com.github.sc.apps.saisc.person.persistence.PersonRepository;
+import com.github.sc.apps.saisc.person.persistence.SkillLevel;
 import lombok.extern.slf4j.Slf4j;
 import org.springaicommunity.mcp.annotation.McpTool;
 import org.springaicommunity.mcp.annotation.McpToolParam;
@@ -58,12 +59,12 @@ public class PersonTool implements ToolMarkerInterface {
 
     @McpTool(name = "get_person_hobby_skill_level", description = "get the skill level of the person for the hobby")
     @Tool(name = "get_person_hobby_skill_level", description = "get the skill level of the person for the hobby")
-    public PersonHobbyET.SkillLevel getPersonSkillLevelForHobby(
+    public SkillLevel getPersonSkillLevelForHobby(
             @McpToolParam(description = "The id of the person") @ToolParam(description = "The id of the person") Integer id,
             @McpToolParam(description = "The hobby id") @ToolParam(description = "The hobby id") Integer hobbyId
     ) {
         log.debug("get person hobby skill level for person {} and hobby {}", id, hobbyId);
-        var result = personHobbyRepository.findByPersonAndHobby(id, hobbyId).map(PersonHobbyET::getSkillLevel).orElse(PersonHobbyET.SkillLevel.NONE);
+        var result = personHobbyRepository.findByPersonAndHobby(id, hobbyId).map(PersonHobbyET::getSkillLevel).orElse(SkillLevel.NONE);
         log.debug("found skill level: {} for person {} and hobby {}", result, id, hobbyId);
         return result;
     }
@@ -71,7 +72,7 @@ public class PersonTool implements ToolMarkerInterface {
     public record PersonToolResponse(int personId, String fistName, String lastName, LocalDate birthday) {
     }
 
-    public record PersonHobbyToolResponse(int personId, int hobbyId, PersonHobbyET.SkillLevel skillLevel) {
+    public record PersonHobbyToolResponse(int personId, int hobbyId, SkillLevel skillLevel) {
     }
 
 }
