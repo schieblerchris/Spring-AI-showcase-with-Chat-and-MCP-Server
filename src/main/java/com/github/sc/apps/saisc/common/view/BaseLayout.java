@@ -4,6 +4,7 @@ import com.github.sc.apps.saisc.chat.view.ChatHistoryView;
 import com.github.sc.apps.saisc.chat.view.ChatView;
 import com.github.sc.apps.saisc.chatmodel.view.ChatModelListView;
 import com.github.sc.apps.saisc.dump.view.DumpView;
+import com.github.sc.apps.saisc.event.view.EventListView;
 import com.github.sc.apps.saisc.flyway.view.FlywayView;
 import com.github.sc.apps.saisc.hobby.view.HobbyListView;
 import com.github.sc.apps.saisc.person.view.PersonListView;
@@ -47,6 +48,7 @@ public class BaseLayout extends AppLayout {
 
         var sideNavInspect = new SideNav();
         sideNavInspect.setLabel("Inspect");
+        sideNavInspect.addItem(new SideNavItem("Events", EventListView.class, VaadinIcon.CROSSHAIRS.create()));
         sideNavInspect.addItem(new SideNavItem("Hobbies", HobbyListView.class, VaadinIcon.USER_HEART.create()));
         sideNavInspect.addItem(new SideNavItem("Persons", PersonListView.class, VaadinIcon.USERS.create()));
 
