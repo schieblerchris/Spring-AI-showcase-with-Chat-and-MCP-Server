@@ -1,13 +1,6 @@
 package com.github.sc.apps.saisc.common.view;
 
-import com.github.sc.apps.saisc.chat.view.ChatHistoryView;
-import com.github.sc.apps.saisc.chat.view.ChatView;
-import com.github.sc.apps.saisc.chatmodel.view.ChatModelListView;
-import com.github.sc.apps.saisc.dump.view.DumpView;
-import com.github.sc.apps.saisc.event.view.EventListView;
-import com.github.sc.apps.saisc.flyway.view.FlywayView;
-import com.github.sc.apps.saisc.hobby.view.HobbyListView;
-import com.github.sc.apps.saisc.person.view.PersonListView;
+import com.github.sc.apps.saisc.shared.web.AppRoute;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;
@@ -17,7 +10,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteParameters;
 
 import java.util.UUID;
 
@@ -42,22 +34,29 @@ public class BaseLayout extends AppLayout {
     private void createDrawer() {
         var sideNavChat = new SideNav();
         sideNavChat.setLabel("LLM");
-        sideNavChat.addItem(new SideNavItem("Chat", ChatView.class, new RouteParameters("chatId", UUID.randomUUID().toString()), VaadinIcon.CHAT.create()));
-        sideNavChat.addItem(new SideNavItem("History", ChatHistoryView.class, VaadinIcon.ARCHIVE.create()));
-        sideNavChat.addItem(new SideNavItem("Model", ChatModelListView.class, VaadinIcon.FILE_SEARCH.create()));
+        sideNavChat.addItem(navItem("Chat", "/" + AppRoute.CHAT.path() + "/" + UUID.randomUUID(), VaadinIcon.CHAT));
+        sideNavChat.addItem(navItem("History", "/" + AppRoute.CHAT_HISTORY.path(), VaadinIcon.ARCHIVE));
+        sideNavChat.addItem(navItem("Model", "/" + AppRoute.CHAT_MODEL.path(), VaadinIcon.FILE_SEARCH));
 
         var sideNavInspect = new SideNav();
         sideNavInspect.setLabel("Inspect");
-        sideNavInspect.addItem(new SideNavItem("Events", EventListView.class, VaadinIcon.CROSSHAIRS.create()));
-        sideNavInspect.addItem(new SideNavItem("Hobbies", HobbyListView.class, VaadinIcon.USER_HEART.create()));
-        sideNavInspect.addItem(new SideNavItem("Persons", PersonListView.class, VaadinIcon.USERS.create()));
+        sideNavInspect.addItem(navItem("Events", "/" + AppRoute.EVENTS.path(), VaadinIcon.CROSSHAIRS));
+        sideNavInspect.addItem(navItem("Hobbies", "/" + AppRoute.HOBBIES.path(), VaadinIcon.USER_HEART));
+        sideNavInspect.addItem(navItem("Persons", "/" + AppRoute.PERSONS.path(), VaadinIcon.USERS));
 
         var sideNavAdmin = new SideNav();
         sideNavAdmin.setLabel("Admin");
-        sideNavAdmin.addItem(new SideNavItem("Clean DB", FlywayView.class, VaadinIcon.ERASER.create()));
-        sideNavAdmin.addItem(new SideNavItem("Dump DB", DumpView.class, VaadinIcon.DOWNLOAD.create()));
+        sideNavAdmin.addItem(navItem("Clean DB", "/" + AppRoute.DB_CLEAN.path(), VaadinIcon.ERASER));
+        sideNavAdmin.addItem(navItem("Dump DB", "/" + AppRoute.DUMP.path(), VaadinIcon.DOWNLOAD));
 
         addToDrawer(sideNavChat, sideNavInspect, sideNavAdmin);
+    }
+
+    private SideNavItem navItem(String label, String path, VaadinIcon icon) {
+        var item = new SideNavItem(label);
+        item.setPrefixComponent(icon.create());
+        item.setPath(path);
+        return item;
     }
 
 }
