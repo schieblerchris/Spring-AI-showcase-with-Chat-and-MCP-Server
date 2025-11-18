@@ -1,4 +1,4 @@
-package com.github.sc.apps.saisc.common.view;
+package com.github.sc.apps.saisc.shared.web;
 
 import com.github.sc.apps.saisc.chat.view.ChatView;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;

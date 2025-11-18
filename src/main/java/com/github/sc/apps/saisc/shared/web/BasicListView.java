@@ -1,6 +1,6 @@
-package com.github.sc.apps.saisc.common.view;
+package com.github.sc.apps.saisc.shared.web;
 
-import com.github.sc.apps.saisc.common.mapping.FindAllRepository;
+import com.github.sc.apps.saisc.shared.infra.FindAllRepository;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;

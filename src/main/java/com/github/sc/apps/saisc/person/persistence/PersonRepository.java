@@ -1,6 +1,8 @@
 package com.github.sc.apps.saisc.person.persistence;
 
-import com.github.sc.apps.saisc.common.mapping.FindAllRepository;
+import com.github.sc.apps.saisc.person.model.PersonET;
+import com.github.sc.apps.saisc.person.model.PersonHobbyET;
+import com.github.sc.apps.saisc.shared.infra.FindAllRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,4 +1,4 @@
-package com.github.sc.apps.saisc.common.view;
+package com.github.sc.apps.saisc.shared.web;
 
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;

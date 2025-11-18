@@ -1,11 +1,15 @@
 package com.github.sc.apps.saisc.person.view;
 
-import com.github.sc.apps.saisc.common.view.BaseLayout;
-import com.github.sc.apps.saisc.common.view.NotFoundView;
 import com.github.sc.apps.saisc.event.persistence.EventRepository;
-import com.github.sc.apps.saisc.hobby.persistence.HobbyET;
+import com.github.sc.apps.saisc.hobby.model.HobbyET;
 import com.github.sc.apps.saisc.hobby.persistence.HobbyRepository;
-import com.github.sc.apps.saisc.person.persistence.*;
+import com.github.sc.apps.saisc.person.model.PersonET;
+import com.github.sc.apps.saisc.person.model.PersonHobbyET;
+import com.github.sc.apps.saisc.person.model.SkillLevel;
+import com.github.sc.apps.saisc.person.persistence.PersonHobbyRepository;
+import com.github.sc.apps.saisc.person.persistence.PersonRepository;
+import com.github.sc.apps.saisc.shared.web.BaseLayout;
+import com.github.sc.apps.saisc.shared.web.NotFoundView;
 import com.github.sc.apps.saisc.vacation.persistence.VacationRepository;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;

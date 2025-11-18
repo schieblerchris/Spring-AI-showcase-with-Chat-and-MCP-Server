@@ -1,6 +1,7 @@
 package com.github.sc.apps.saisc.chat.persistence;
 
-import com.github.sc.apps.saisc.common.mapping.FindAllRepository;
+import com.github.sc.apps.saisc.chat.model.ChatHistoryVO;
+import com.github.sc.apps.saisc.shared.infra.FindAllRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 

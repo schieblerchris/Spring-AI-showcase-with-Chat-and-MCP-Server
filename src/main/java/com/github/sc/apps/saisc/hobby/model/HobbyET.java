@@ -1,4 +1,4 @@
-package com.github.sc.apps.saisc.hobby.persistence;
+package com.github.sc.apps.saisc.hobby.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

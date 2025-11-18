@@ -2,7 +2,7 @@ package com.github.sc.apps.saisc.chatmodel.view;
 
 
 import com.github.sc.apps.saisc.chatmodel.api.OpenAIAdapter;
-import com.github.sc.apps.saisc.common.view.BaseLayout;
+import com.github.sc.apps.saisc.shared.web.BaseLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;

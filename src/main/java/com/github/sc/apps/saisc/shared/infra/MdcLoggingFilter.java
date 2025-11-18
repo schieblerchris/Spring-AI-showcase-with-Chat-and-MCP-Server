@@ -1,4 +1,4 @@
-package com.github.sc.apps.saisc.logging;
+package com.github.sc.apps.saisc.shared.infra;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

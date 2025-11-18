@@ -1,5 +1,6 @@
 package com.github.sc.apps.saisc.vacation.persistence;
 
+import com.github.sc.apps.saisc.vacation.model.VacationET;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

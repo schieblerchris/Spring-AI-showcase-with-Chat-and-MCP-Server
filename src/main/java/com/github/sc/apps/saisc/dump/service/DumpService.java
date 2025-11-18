@@ -5,7 +5,7 @@ import com.github.sc.apps.saisc.dump.model.DumpHobbyTO;
 import com.github.sc.apps.saisc.dump.model.DumpModelTO;
 import com.github.sc.apps.saisc.dump.model.DumpPersonTO;
 import com.github.sc.apps.saisc.event.persistence.EventRepository;
-import com.github.sc.apps.saisc.hobby.persistence.HobbyET;
+import com.github.sc.apps.saisc.hobby.model.HobbyET;
 import com.github.sc.apps.saisc.hobby.persistence.HobbyRepository;
 import com.github.sc.apps.saisc.person.persistence.PersonHobbyRepository;
 import com.github.sc.apps.saisc.person.persistence.PersonRepository;

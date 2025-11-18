@@ -1,6 +1,6 @@
-package com.github.sc.apps.saisc.vacation.persistence;
+package com.github.sc.apps.saisc.vacation.model;
 
-import com.github.sc.apps.saisc.person.persistence.PersonET;
+import com.github.sc.apps.saisc.person.model.PersonET;
 import jakarta.persistence.*;
 import lombok.Data;
 

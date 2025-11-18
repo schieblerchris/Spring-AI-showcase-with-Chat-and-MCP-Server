@@ -1,4 +1,4 @@
-package com.github.sc.apps.saisc.common.mapping;
+package com.github.sc.apps.saisc.shared.infra;
 
 import org.springframework.data.domain.Sort;
 

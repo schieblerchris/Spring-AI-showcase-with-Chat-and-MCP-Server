@@ -1,5 +1,7 @@
 package com.github.sc.apps.saisc.person.persistence;
 
+import com.github.sc.apps.saisc.person.model.PersonHobbyET;
+import com.github.sc.apps.saisc.person.model.SkillLevel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

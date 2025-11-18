@@ -1,12 +1,12 @@
 package com.github.sc.apps.saisc.hobby.view;
 
-import com.github.sc.apps.saisc.common.view.BaseLayout;
-import com.github.sc.apps.saisc.common.view.NotFoundView;
-import com.github.sc.apps.saisc.hobby.persistence.HobbyET;
+import com.github.sc.apps.saisc.hobby.model.HobbyET;
 import com.github.sc.apps.saisc.hobby.persistence.HobbyRepository;
+import com.github.sc.apps.saisc.person.model.SkillLevel;
 import com.github.sc.apps.saisc.person.persistence.PersonHobbyRepository;
-import com.github.sc.apps.saisc.person.persistence.SkillLevel;
 import com.github.sc.apps.saisc.person.view.PersonDetailView;
+import com.github.sc.apps.saisc.shared.web.BaseLayout;
+import com.github.sc.apps.saisc.shared.web.NotFoundView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;

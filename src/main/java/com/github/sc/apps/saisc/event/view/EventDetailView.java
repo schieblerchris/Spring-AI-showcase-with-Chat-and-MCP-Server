@@ -1,11 +1,11 @@
 package com.github.sc.apps.saisc.event.view;
 
-import com.github.sc.apps.saisc.common.view.BaseLayout;
-import com.github.sc.apps.saisc.common.view.NotFoundView;
-import com.github.sc.apps.saisc.event.persistence.EventET;
+import com.github.sc.apps.saisc.event.model.EventET;
 import com.github.sc.apps.saisc.event.persistence.EventRepository;
-import com.github.sc.apps.saisc.person.persistence.PersonEventET;
+import com.github.sc.apps.saisc.person.model.PersonEventET;
 import com.github.sc.apps.saisc.person.persistence.PersonEventRepository;
+import com.github.sc.apps.saisc.shared.web.BaseLayout;
+import com.github.sc.apps.saisc.shared.web.NotFoundView;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;

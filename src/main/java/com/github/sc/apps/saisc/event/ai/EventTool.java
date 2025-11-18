@@ -1,9 +1,9 @@
 package com.github.sc.apps.saisc.event.ai;
 
-import com.github.sc.apps.saisc.common.mcp.ToolMarkerInterface;
-import com.github.sc.apps.saisc.event.persistence.EventET;
+import com.github.sc.apps.saisc.event.model.EventET;
 import com.github.sc.apps.saisc.event.persistence.EventRepository;
-import com.github.sc.apps.saisc.person.persistence.SkillLevel;
+import com.github.sc.apps.saisc.person.model.SkillLevel;
+import com.github.sc.apps.saisc.shared.mcp.ToolMarkerInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springaicommunity.mcp.annotation.McpTool;

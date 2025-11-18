@@ -1,9 +1,9 @@
 package com.github.sc.apps.saisc.person.view;
 
-import com.github.sc.apps.saisc.common.view.BaseLayout;
-import com.github.sc.apps.saisc.common.view.BasicListView;
-import com.github.sc.apps.saisc.person.persistence.PersonET;
+import com.github.sc.apps.saisc.person.model.PersonET;
 import com.github.sc.apps.saisc.person.persistence.PersonRepository;
+import com.github.sc.apps.saisc.shared.web.BaseLayout;
+import com.github.sc.apps.saisc.shared.web.BasicListView;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.function.ValueProvider;

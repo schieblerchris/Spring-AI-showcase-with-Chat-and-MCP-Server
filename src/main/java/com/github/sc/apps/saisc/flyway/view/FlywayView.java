@@ -1,6 +1,6 @@
 package com.github.sc.apps.saisc.flyway.view;
 
-import com.github.sc.apps.saisc.common.view.BaseLayout;
+import com.github.sc.apps.saisc.shared.web.BaseLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;

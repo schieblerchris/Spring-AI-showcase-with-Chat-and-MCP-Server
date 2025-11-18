@@ -1,9 +1,9 @@
 package com.github.sc.apps.saisc.hobby.view;
 
-import com.github.sc.apps.saisc.common.view.BaseLayout;
-import com.github.sc.apps.saisc.common.view.BasicListView;
-import com.github.sc.apps.saisc.hobby.persistence.HobbyET;
+import com.github.sc.apps.saisc.hobby.model.HobbyET;
 import com.github.sc.apps.saisc.hobby.persistence.HobbyRepository;
+import com.github.sc.apps.saisc.shared.web.BaseLayout;
+import com.github.sc.apps.saisc.shared.web.BasicListView;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.function.ValueProvider;

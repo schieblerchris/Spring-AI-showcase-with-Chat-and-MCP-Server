@@ -1,6 +1,6 @@
-package com.github.sc.apps.saisc.event.persistence;
+package com.github.sc.apps.saisc.event.model;
 
-import com.github.sc.apps.saisc.person.persistence.SkillLevel;
+import com.github.sc.apps.saisc.person.model.SkillLevel;
 import jakarta.persistence.*;
 import lombok.Data;
 

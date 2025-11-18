@@ -1,8 +1,8 @@
 package com.github.sc.apps.saisc.dump.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.sc.apps.saisc.common.view.BaseLayout;
 import com.github.sc.apps.saisc.dump.service.DumpService;
+import com.github.sc.apps.saisc.shared.web.BaseLayout;
 import com.helger.commons.io.stream.StringInputStream;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;

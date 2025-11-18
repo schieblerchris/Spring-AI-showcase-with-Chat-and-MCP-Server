@@ -1,6 +1,7 @@
 package com.github.sc.apps.saisc.event.persistence;
 
-import com.github.sc.apps.saisc.common.mapping.FindAllRepository;
+import com.github.sc.apps.saisc.event.model.EventET;
+import com.github.sc.apps.saisc.shared.infra.FindAllRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

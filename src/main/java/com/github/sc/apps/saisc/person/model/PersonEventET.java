@@ -1,4 +1,4 @@
-package com.github.sc.apps.saisc.person.persistence;
+package com.github.sc.apps.saisc.person.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

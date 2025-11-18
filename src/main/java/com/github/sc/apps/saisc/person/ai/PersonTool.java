@@ -1,10 +1,10 @@
 package com.github.sc.apps.saisc.person.ai;
 
-import com.github.sc.apps.saisc.common.mcp.ToolMarkerInterface;
-import com.github.sc.apps.saisc.person.persistence.PersonHobbyET;
+import com.github.sc.apps.saisc.person.model.PersonHobbyET;
+import com.github.sc.apps.saisc.person.model.SkillLevel;
 import com.github.sc.apps.saisc.person.persistence.PersonHobbyRepository;
 import com.github.sc.apps.saisc.person.persistence.PersonRepository;
-import com.github.sc.apps.saisc.person.persistence.SkillLevel;
+import com.github.sc.apps.saisc.shared.mcp.ToolMarkerInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springaicommunity.mcp.annotation.McpTool;
 import org.springaicommunity.mcp.annotation.McpToolParam;

@@ -1,6 +1,5 @@
-package com.github.sc.apps.saisc.common.view;
+package com.github.sc.apps.saisc.shared.web;
 
-import com.github.sc.apps.saisc.shared.web.AppRoute;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;

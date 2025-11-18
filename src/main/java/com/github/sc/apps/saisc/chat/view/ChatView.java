@@ -1,8 +1,8 @@
 package com.github.sc.apps.saisc.chat.view;
 
 import com.github.sc.apps.saisc.chatmodel.api.OpenAIAdapter;
-import com.github.sc.apps.saisc.common.mcp.ToolMarkerInterface;
-import com.github.sc.apps.saisc.common.view.BaseLayout;
+import com.github.sc.apps.saisc.shared.mcp.ToolMarkerInterface;
+import com.github.sc.apps.saisc.shared.web.BaseLayout;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.markdown.Markdown;
 import com.vaadin.flow.component.messages.MessageInput;

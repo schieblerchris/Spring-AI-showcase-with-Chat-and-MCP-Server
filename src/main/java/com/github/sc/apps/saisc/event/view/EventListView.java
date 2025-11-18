@@ -1,9 +1,9 @@
 package com.github.sc.apps.saisc.event.view;
 
-import com.github.sc.apps.saisc.common.view.BaseLayout;
-import com.github.sc.apps.saisc.common.view.BasicListView;
-import com.github.sc.apps.saisc.event.persistence.EventET;
+import com.github.sc.apps.saisc.event.model.EventET;
 import com.github.sc.apps.saisc.event.persistence.EventRepository;
+import com.github.sc.apps.saisc.shared.web.BaseLayout;
+import com.github.sc.apps.saisc.shared.web.BasicListView;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.function.ValueProvider;

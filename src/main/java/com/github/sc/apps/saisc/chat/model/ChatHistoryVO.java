@@ -1,4 +1,4 @@
-package com.github.sc.apps.saisc.chat.persistence;
+package com.github.sc.apps.saisc.chat.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
