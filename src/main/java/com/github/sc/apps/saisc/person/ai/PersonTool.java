@@ -69,6 +69,11 @@ public class PersonTool implements ToolMarkerInterface {
         return result;
     }
 
+    @Override
+    public String name() {
+        return "Person";
+    }
+
     public record PersonToolResponse(int personId, String fistName, String lastName, LocalDate birthday) {
     }
 

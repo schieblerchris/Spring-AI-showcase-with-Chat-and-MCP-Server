@@ -63,6 +63,11 @@ public class HobbyTool implements ToolMarkerInterface {
         return result;
     }
 
+    @Override
+    public String name() {
+        return "Hobby";
+    }
+
     public record HobbyToolResponse(
             int hobbyId,
             String name

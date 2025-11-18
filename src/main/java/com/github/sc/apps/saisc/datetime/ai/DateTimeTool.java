@@ -52,4 +52,8 @@ public class DateTimeTool implements ToolMarkerInterface {
         return result;
     }
 
+    @Override
+    public String name() {
+        return "DateTime";
+    }
 }

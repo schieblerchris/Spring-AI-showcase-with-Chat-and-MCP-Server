@@ -64,6 +64,11 @@ public class EventTool implements ToolMarkerInterface {
         );
     }
 
+    @Override
+    public String name() {
+        return "Event";
+    }
+
     public record EventToolResponse(int eventId, String title, LocalDate startDate, LocalDate endDate, Integer hobbyId,
                                     SkillLevel skillLevel) {
     }

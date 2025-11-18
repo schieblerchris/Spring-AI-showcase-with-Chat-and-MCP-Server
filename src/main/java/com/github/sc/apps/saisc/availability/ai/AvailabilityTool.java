@@ -47,4 +47,8 @@ public class AvailabilityTool implements ToolMarkerInterface {
         return result;
     }
 
+    @Override
+    public String name() {
+        return "Availability";
+    }
 }

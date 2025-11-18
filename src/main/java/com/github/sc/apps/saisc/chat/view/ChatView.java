@@ -5,7 +5,9 @@ import com.github.sc.apps.saisc.chat.view.components.StarterSuggestionsComponent
 import com.github.sc.apps.saisc.chatmodel.api.OpenAIAdapter;
 import com.github.sc.apps.saisc.shared.mcp.ToolMarkerInterface;
 import com.github.sc.apps.saisc.shared.web.BaseLayout;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.Unit;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.markdown.Markdown;
 import com.vaadin.flow.component.messages.MessageInput;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -14,7 +16,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.router.*;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientResponse;
@@ -29,7 +33,9 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @PageTitle("Chat")
@@ -37,9 +43,16 @@ import java.util.UUID;
 public class ChatView extends VerticalLayout implements BeforeEnterObserver {
 
     private static final String SYSTEM_PROMPT = """
-            You are a personal assistant to help finding the best suited person for a given activity.
-            Always try to find the best fitting person by availability and hobby skill level.
-            To reduce biases resolve the person data, like first name, last name, age, gender, etc. at the last possible moment.
+            *Persona*:
+            You are a helpful and honest assistant who will help the users to find what they need.
+            You are always focussed on unbiased responses.
+            *Task*:
+            Your goal is to provide the user with the information they need and help them find efficient solutions.
+            If the question of the user cannot be full filled, provide the user with an alternative solution.
+            If you rely on tool calls, always include your decision making and verify the data from the tool call.
+            *Context*:
+            All needed context besides the user prompt can be accessed by the tools provided.
+            *Format*:
             If you reference any of the following data add a http link to the corresponding detail page:
             * Persons `http://localhost:58080/persons/{personId}`
             * Hobbies `http://localhost:58080/hobbies/{hobbyId}`
@@ -52,7 +65,7 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
     private final ChatMemoryRepository chatMemoryRepository;
     private final ChatClient.Builder chatClientBuilder;
     private final MessageChatMemoryAdvisor chatMemoryAdvisor;
-    private final Object[] tools;
+    private final Map<String, Tool> toolsMap;
     private final List<String> models;
     private ChatClient chatClient;
     private ChatId chatId;
@@ -60,18 +73,10 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
     private double temperature = 0.3;
 
     @Autowired
-    public ChatView(ChatClient.Builder chatClientBuilder,
-                    ChatMemory chatMemory,
-                    List<ToolMarkerInterface> tools,
-                    ChatMemoryRepository chatMemoryRepository,
-                    OpenAIAdapter openAIAdapter,
-                    @Value("${application.preferred.ai.model}") List<String> preferredModel
-    ) {
+    public ChatView(ChatClient.Builder chatClientBuilder, ChatMemory chatMemory, List<ToolMarkerInterface> tools, ChatMemoryRepository chatMemoryRepository, OpenAIAdapter openAIAdapter, @Value("${application.preferred.ai.model}") List<String> preferredModel) {
         this.chatClientBuilder = chatClientBuilder;
-        this.tools = tools.toArray(new ToolMarkerInterface[0]);
-        this.chatMemoryAdvisor = MessageChatMemoryAdvisor
-                .builder(chatMemory)
-                .build();
+        this.toolsMap = new TreeMap<>(tools.stream().collect(Collectors.toMap(ToolMarkerInterface::name, toolMarkerInterface -> new Tool(toolMarkerInterface.name(), toolMarkerInterface, toolMarkerInterface.functions()))));
+        this.chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
 
         this.chatMemoryRepository = chatMemoryRepository;
         this.models = openAIAdapter.getModels().stream().map(OpenAIAdapter.ModelData::id).toList();
@@ -83,6 +88,20 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
 
         var temperatureField = getTemperatureField();
         modelOptionsLayout.add(temperatureField);
+
+        var toolBoyLayout = new VerticalLayout();
+        toolBoyLayout.add(new Text("Tools:"));
+        var toolLayout = new HorizontalLayout();
+        toolLayout.setDefaultVerticalComponentAlignment(Alignment.BASELINE);
+        toolsMap.forEach((k, v) -> {
+            var checkBox = new Checkbox(k);
+            checkBox.setTooltipText(Strings.join(v.getFunctions(), '\n'));
+            checkBox.setValue(v.isEnabled());
+            checkBox.addValueChangeListener(e -> v.setEnabled(e.getValue()));
+            toolLayout.add(checkBox);
+        });
+        toolBoyLayout.add(toolLayout);
+        modelOptionsLayout.add(toolBoyLayout);
 
         this.add(modelOptionsLayout);
 
@@ -132,14 +151,7 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
     }
 
     public void initChatClient(String modelName) {
-        this.chatClient = chatClientBuilder
-                .defaultOptions(ChatOptions.builder()
-                        .model(modelName)
-                        .temperature(temperature)
-                        .build())
-                .defaultSystem(SYSTEM_PROMPT)
-                .defaultAdvisors(chatMemoryAdvisor)
-                .build();
+        this.chatClient = chatClientBuilder.defaultOptions(ChatOptions.builder().model(modelName).temperature(temperature).build()).defaultSystem(SYSTEM_PROMPT).defaultAdvisors(chatMemoryAdvisor).build();
     }
 
     @Override
@@ -206,17 +218,24 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
     }
 
     private Flux<ChatClientResponse> chatStreamDetailed(String userInput) {
-        return chatClient.prompt()
-                .advisors(advisorSpec ->
-                        advisorSpec.param(ChatMemory.CONVERSATION_ID, chatId.id())
-                )
+        return chatClient
+                .prompt()
+                .advisors(advisorSpec -> advisorSpec.param(ChatMemory.CONVERSATION_ID, chatId.id()))
                 .user(userInput)
-                .tools(tools)
+                .tools(toolsMap.values().stream().filter(Tool::isEnabled).map(Tool::getToolImplementation).toArray())
                 .stream()
                 .chatClientResponse();
     }
 
     private record ChatId(String id) {
+    }
+
+    @Data
+    private static class Tool {
+        private final String name;
+        private final Object toolImplementation;
+        private final List<String> functions;
+        private boolean enabled = true;
     }
 
 }
