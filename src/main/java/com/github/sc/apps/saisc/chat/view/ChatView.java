@@ -1,5 +1,7 @@
 package com.github.sc.apps.saisc.chat.view;
 
+import com.github.sc.apps.saisc.chat.view.components.ChatBubbleCard;
+import com.github.sc.apps.saisc.chat.view.components.StarterSuggestionsComponent;
 import com.github.sc.apps.saisc.chatmodel.api.OpenAIAdapter;
 import com.github.sc.apps.saisc.shared.mcp.ToolMarkerInterface;
 import com.github.sc.apps.saisc.shared.web.BaseLayout;
@@ -25,7 +27,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import reactor.core.publisher.Flux;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -47,16 +48,15 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
             Always include a table containing your tool calls with the input parameters in the final response.
             """;
     private final VerticalLayout chatLayout = new VerticalLayout();
-    private final HorizontalLayout modelOptionsLayout = new HorizontalLayout();
     private final StarterSuggestionsComponent starterSuggestions = new StarterSuggestionsComponent(this::handleUserPrompt);
     private final ChatMemoryRepository chatMemoryRepository;
     private final ChatClient.Builder chatClientBuilder;
     private final MessageChatMemoryAdvisor chatMemoryAdvisor;
     private final Object[] tools;
+    private final List<String> models;
     private ChatClient chatClient;
     private ChatId chatId;
-    private List<String> models = new ArrayList<>();
-    private String model = "";
+    private String model;
     private double temperature = 0.3;
 
     @Autowired
@@ -78,6 +78,7 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
         this.model = models.stream().filter(preferredModel::contains).findFirst().orElse(models.getFirst());
 
         var modelSelect = getModelSelect();
+        HorizontalLayout modelOptionsLayout = new HorizontalLayout();
         modelOptionsLayout.add(modelSelect);
 
         var temperatureField = getTemperatureField();

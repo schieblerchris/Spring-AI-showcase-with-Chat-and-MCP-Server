@@ -1,4 +1,4 @@
-package com.github.sc.apps.saisc.chat.view;
+package com.github.sc.apps.saisc.chat.view.components;
 
 
 import com.vaadin.flow.component.Component;
