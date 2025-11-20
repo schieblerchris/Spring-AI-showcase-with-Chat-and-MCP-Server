@@ -4,6 +4,7 @@ $$
         chessId   INT;
         cyclingId INT;
         runningId INT;
+        sudokuId INT;
     BEGIN
         SELECT id
         INTO chessId
@@ -19,6 +20,11 @@ $$
         INTO runningId
         FROM t_hobby
         WHERE name = 'Running';
+
+        SELECT id
+        INTO sudokuId
+        FROM t_hobby
+        WHERE name = 'Sudoku';
 
         INSERT INTO t_event(id, title, start_date, end_date, hobby_fk, skill_level)
         VALUES (nextval('event_pk_seq'), 'Tata Steel Masters', cyd(1, 17), cyd(2, 2), @chessId, 'EXPERT'),
@@ -223,5 +229,11 @@ $$
                (nextval('event_pk_seq'), 'Berlin Marathon', nyd(9, 27), nyd(9, 27), @runningId, 'EXPERT'),
                (nextval('event_pk_seq'), 'Chicago Marathon', nyd(10, 11), nyd(10, 11), @runningId, 'EXPERT'),
                (nextval('event_pk_seq'), 'New York City Marathon', nyd(11, 1), nyd(11, 1), @runningId, 'EXPERT');
+
+        INSERT INTO t_event(id, title, start_date, end_date, hobby_fk, skill_level)
+        VALUES (nextval('event_pk_seq'), 'Sudoku Basecamp', cyd(12, 1), cyd(12, 1), @sudokuId, 'BEGINNER'),
+               (nextval('event_pk_seq'), 'Sudoku Booster', cyd(12, 2), cyd(12, 2), @sudokuId, 'INTERMEDIATE'),
+               (nextval('event_pk_seq'), 'Sudoku Basecamp', nyd(12, 1), nyd(12, 1), @sudokuId, 'BEGINNER'),
+               (nextval('event_pk_seq'), 'Sudoku Booster', nyd(12, 2), nyd(12, 2), @sudokuId, 'INTERMEDIATE');
     END
 $$;

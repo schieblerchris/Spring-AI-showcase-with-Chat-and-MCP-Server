@@ -24,7 +24,7 @@ DECLARE
     person_record RECORD;
 BEGIN
     FOR person_record IN
-        SELECT ph.person_fk, ph.hobby_fk
+        SELECT distinct ph.person_fk
         FROM t_person_hobby ph
         WHERE ph.skill_level in ('INTERMEDIATE', 'ADVANCED')
         LOOP

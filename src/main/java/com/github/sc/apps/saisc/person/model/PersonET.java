@@ -22,5 +22,7 @@ public class PersonET {
     private String lastName;
     @Column(name = "birthdate", nullable = false)
     private LocalDate birthdate;
+    @Column(name = "email", nullable = false)
+    private String email;
 
 }

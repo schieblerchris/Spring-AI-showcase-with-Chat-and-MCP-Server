@@ -220,7 +220,12 @@ Give me a list of at most 5 persons, that are available and not on vacation.
 Since it is a realy important competition I want to prefer skill levels Expert and Advanced, but if there is no one available I want to prefer skill levels Intermediate and than Beginner.
 In the result show the persons in a table containing person id, firstname, lastname, birthdate and skilllevel.
 Sort the table entries by skilllevel descending, then by birthdate ascending.
-Verify your result, do not use placeholders!
+Verify your result, no placeholders!
+Finally notify the persons in the result that they have been selected for the competition.
+```
+
+```
+There is a Sudoku tournament in 11 days that we have already entered into our database. We need to enter two attendees and search for the best-fitting people based on the required skill level for the event. Print a detailed table of the selected attendees, including their names, date of birth, skill level and email address. Check that the selected attendees are available. After verification, please notify the selected entrants by email that they have been chosen for the event.
 ```
 
 # About my system, for reference

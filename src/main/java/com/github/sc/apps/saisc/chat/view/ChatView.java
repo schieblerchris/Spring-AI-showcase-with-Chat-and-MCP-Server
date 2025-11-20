@@ -7,9 +7,12 @@ import com.github.sc.apps.saisc.shared.mcp.ToolMarkerInterface;
 import com.github.sc.apps.saisc.shared.web.BaseLayout;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.Unit;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.markdown.Markdown;
 import com.vaadin.flow.component.messages.MessageInput;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -82,6 +85,17 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
         this.models = openAIAdapter.getModels().stream().map(OpenAIAdapter.ModelData::id).toList();
         this.model = models.stream().filter(preferredModel::contains).findFirst().orElse(models.getFirst());
 
+        // Button zum Starten eines komplett neuen Chats (oben rechts als globale Aktion)
+        var newChatButton = new Button("Neuer Chat", VaadinIcon.PLUS.create());
+        newChatButton.addClickListener(e -> this.getUI().ifPresent(ui ->
+                ui.navigate(ChatView.class, new RouteParameters(Map.of("chatId", UUID.randomUUID().toString())))
+        ));
+
+        var headerLayout = new HorizontalLayout(newChatButton);
+        headerLayout.setWidthFull();
+        headerLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+        this.add(headerLayout);
+
         var modelSelect = getModelSelect();
         HorizontalLayout modelOptionsLayout = new HorizontalLayout();
         modelOptionsLayout.add(modelSelect);
@@ -151,7 +165,16 @@ public class ChatView extends VerticalLayout implements BeforeEnterObserver {
     }
 
     public void initChatClient(String modelName) {
-        this.chatClient = chatClientBuilder.defaultOptions(ChatOptions.builder().model(modelName).temperature(temperature).build()).defaultSystem(SYSTEM_PROMPT).defaultAdvisors(chatMemoryAdvisor).build();
+        this.chatClient = chatClientBuilder
+                .defaultOptions(
+                        ChatOptions.builder()
+                                .model(modelName)
+                                .temperature(temperature)
+                                .build()
+                )
+                .defaultSystem(SYSTEM_PROMPT)
+                .defaultAdvisors(chatMemoryAdvisor)
+                .build();
     }
 
     @Override

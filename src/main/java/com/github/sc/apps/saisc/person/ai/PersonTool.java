@@ -34,7 +34,7 @@ public class PersonTool implements ToolMarkerInterface {
     @Tool(name = "get_person_by_id", description = "get a specific person by id")
     public PersonToolResponse getPersonById(@McpToolParam(description = "The id of the person") @ToolParam(description = "The id of the person") Integer id) {
         log.debug("get person by id {}", id);
-        var result = personRepository.findById(id).map(p -> new PersonToolResponse(p.getId(), p.getFirstName(), p.getLastName(), p.getBirthdate())).orElse(null);
+        var result = personRepository.findById(id).map(p -> new PersonToolResponse(p.getId(), p.getFirstName(), p.getLastName(), p.getBirthdate(), p.getEmail())).orElse(null);
         log.debug("found person: {}", result);
         return result;
     }
@@ -52,7 +52,7 @@ public class PersonTool implements ToolMarkerInterface {
     @Tool(name = "get_person_by_first_name_and_last_name", description = "get a specific person by their first name and last name")
     public List<PersonToolResponse> getPersonByFirstnameAndLastname(@McpToolParam(description = "The first name of the person") @ToolParam(description = "The first name of the person") String firstName, @McpToolParam(description = "The last name of the person") @ToolParam(description = "The last name of the person") String lastName) {
         log.debug("get person by first name {} and last name {}", firstName, lastName);
-        var result = personRepository.findAllByFirstNameLikeIgnoreCaseAndLastNameIgnoreCase(firstName, lastName).stream().map(p -> new PersonToolResponse(p.getId(), p.getFirstName(), p.getLastName(), p.getBirthdate())).toList();
+        var result = personRepository.findAllByFirstNameLikeIgnoreCaseAndLastNameIgnoreCase(firstName, lastName).stream().map(p -> new PersonToolResponse(p.getId(), p.getFirstName(), p.getLastName(), p.getBirthdate(), p.getEmail())).toList();
         log.debug("found: {}", result);
         return result;
     }
@@ -74,7 +74,7 @@ public class PersonTool implements ToolMarkerInterface {
         return "Person";
     }
 
-    public record PersonToolResponse(int personId, String fistName, String lastName, LocalDate birthday) {
+    public record PersonToolResponse(int personId, String fistName, String lastName, LocalDate birthday, String email) {
     }
 
     public record PersonHobbyToolResponse(int personId, int hobbyId, SkillLevel skillLevel) {

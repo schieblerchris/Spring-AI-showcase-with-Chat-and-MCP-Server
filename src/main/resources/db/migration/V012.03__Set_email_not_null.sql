@@ -1,0 +1,2 @@
+ALTER TABLE t_person
+    ALTER COLUMN email SET NOT NULL;
